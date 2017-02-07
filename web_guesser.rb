@@ -1,27 +1,26 @@
 require 'sinatra'
 require 'sinatra/reloader'
 
-
 SECRET_NUMBER = rand(100)
 VALUES = {
-  wtl: {message: 'Way Too low!', backcolor: 'red'},
-  tl:  {message: 'Too low!', backcolor: '#ffcccc'},
-  co:  {message: 'You got it right!<br>' \
+  wtl: { message: 'Way Too low!', backcolor: 'red' },
+  tl:  { message: 'Too low!', backcolor: '#ffcccc' },
+  co:  { message: 'You got it right!<br>' \
        'The SECRET NUMBER is ' + SECRET_NUMBER.to_s,
-        backcolor: 'green'},
-  wth: {message: 'Way too high!', backcolor: 'red'},
-  th:  {message: 'Too high!', backcolor: '#ffcccc'}
-}
-NEW_GAME = '<br>A new number has been generated'
+         backcolor: 'green' },
+  wth: { message: 'Way too high!', backcolor: 'red' },
+  th:  { message: 'Too high!', backcolor: '#ffcccc' }
+}.freeze
+
+new_game = '<br>A new number has been generated'
 @@guesses = 6
 
-
 get '/' do
-  guess = params["guess"].to_i
+  guess = params['guess'].to_i
   option = check_guess(guess)
 
   if guess == SECRET_NUMBER
-    message = VALUES[:co][:message] + NEW_GAME
+    message = VALUES[:co][:message] + new_game
     backcolor = VALUES[:co][:backcolor]
     @@guesses = 6
   elsif @@guesses > 1
@@ -30,13 +29,13 @@ get '/' do
   elsif @@guesses == 1
     @@guesses = 6
     SECRET_NUMBER = rand(100)
-    message = 'You have lost' + NEW_GAME
+    message = 'You have lost' + new_game
   end
   @@guesses -= 1
 
-  erb :index, :locals => {:number => SECRET_NUMBER,
-                          :message => message,
-                          :backcolor => backcolor}
+  erb :index, locals: { number: SECRET_NUMBER,
+                        message: message,
+                        backcolor: backcolor }
 end
 
 def check_guess(guess)
