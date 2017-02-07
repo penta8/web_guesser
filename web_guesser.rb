@@ -12,14 +12,31 @@ VALUES = {
   wth: {message: 'Way too high!', backcolor: 'red'},
   th:  {message: 'Too high!', backcolor: '#ffcccc'}
 }
+NEW_GAME = '<br>A new number has been generated'
+@@guesses = 6
+
 
 get '/' do
   guess = params["guess"].to_i
-  message = check_guess(guess)
+  option = check_guess(guess)
+
+  if guess == SECRET_NUMBER
+    message = VALUES[:co][:message] + NEW_GAME
+    backcolor = VALUES[:co][:backcolor]
+    @@guesses = 6
+  elsif @@guesses > 1
+    message = VALUES[option][:message]
+    backcolor = VALUES[option][:backcolor]
+  elsif @@guesses == 1
+    @@guesses = 6
+    SECRET_NUMBER = rand(100)
+    message = 'You have lost' + NEW_GAME
+  end
+  @@guesses -= 1
 
   erb :index, :locals => {:number => SECRET_NUMBER,
-                          :message => VALUES[message][:message],
-                          :backcolor => VALUES[message][:backcolor]}
+                          :message => message,
+                          :backcolor => backcolor}
 end
 
 def check_guess(guess)
