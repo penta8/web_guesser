@@ -19,7 +19,10 @@ get '/' do
   guess = params['guess'].to_i
   option = check_guess(guess)
 
-  if guess == SECRET_NUMBER
+  if params['cheat'] == 'true'
+    message = 'The secret number is ' + SECRET_NUMBER.to_s
+    backcolor = 'yellow'
+  elsif guess == SECRET_NUMBER
     message = VALUES[:co][:message] + new_game
     backcolor = VALUES[:co][:backcolor]
     @@guesses = 6
