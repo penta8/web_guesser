@@ -27,16 +27,8 @@ def check_guess(guess)
   if SECRET_NUMBER == guess
     :co
   elsif guess > SECRET_NUMBER
-    if guess - SECRET_NUMBER > 5
-      :wth
-    else
-      :th
-    end
+    guess - SECRET_NUMBER > 5 ? :wth : :th
   elsif guess < SECRET_NUMBER
-    if SECRET_NUMBER - guess > 5
-      :wtl
-    else
-      :tl
-    end
+    SECRET_NUMBER - guess > 5 ? :wtl : :tl
   end
 end
