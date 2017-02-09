@@ -12,7 +12,7 @@ VALUES = {
   th:  { message: 'Too high!', backcolor: '#ffcccc' }
 }.freeze
 
-new_game = '<br>A new number has been generated'
+new_game = '<br>A NEW NUMBER has been generated'
 @@guesses = 6
 
 get '/' do
